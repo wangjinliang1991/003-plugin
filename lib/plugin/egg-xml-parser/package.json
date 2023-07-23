@@ -1,0 +1,7 @@
+{
+  "name": "egg-xml-parser",
+  "eggPlugin": {
+    "name": "xmlParser",
+    "version": "1.0.0"
+  }
+}

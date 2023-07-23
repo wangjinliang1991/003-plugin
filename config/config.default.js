@@ -23,9 +23,13 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.bodyParser = {
+    enable: false,
+  };
+
   config.security = {
     csrf: {
-        enable: false,
+      enable: false,
     },
   };
 
