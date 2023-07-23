@@ -1,33 +1,72 @@
 # 003-plugin
 
+plugin的部分，https://www.bilibili.com/video/BV1k3411z7Np
 
 
-## QuickStart
+## csrf
+还是和002一样
 
-<!-- add docs here for user -->
+在apifox中暂时无法获取csrf
+apifox通过后置脚本和header处理
 
-see [egg docs][egg] for more detail.
+后置脚本
 
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+```js
+var csrf_token= pm.cookies.get("csrfToken")
+console.log(pm.response);
+pm.globals.unset("csrftoken")
+pm.globals.set("csrftoken",csrf_token)
 ```
 
-### Deploy
+header
 
-```bash
-$ npm start
-$ npm stop
+```
+Content-Type: text/x-xml
+csrf_token:{{csrftoken}}
 ```
 
-### npm scripts
+但是还是报错403，暂时无法解决，还是和002一样
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+```js
+config.security = {
+    csrf: {
+        enable: false,
+    },
+};
+```
 
+## debug调试
+和视频中不太一样
+launch.json
 
-[egg]: https://eggjs.org
+```json
+{
+  // 使用 IntelliSense 了解相关属性。 
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Egg Dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "debug",
+        "--",
+        "--inspect-brk"
+      ],
+      "console": "integratedTerminal",
+      "restart": true,
+      "protocol": "auto",
+      "port": 7001,
+      "autoAttachChildProcesses": true,
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    }
+  ]
+}
+```
+
